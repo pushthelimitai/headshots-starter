@@ -20,11 +20,11 @@ if (!appWebhookSecret) {
 
 export async function POST(request: Request) {
     const payload = await request.json();
-    const images = payload.urls;
-    // const images = ['https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-04-46-5fY29EPCkWhdDTyj1FULKDFX96asjW.jpg',
-    //     'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-01-wWd8yTgUsZrEctM5CNFUMSx75UWQBu.jpg',
-    //     'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-04-B9oJ8FPgxYFsfCWWYlI6xVBK7WKNzz.jpg',
-    //     'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-06-B73Q0g4XdV2i8LpwDDHaV2pVBaiaJf.jpg']
+    // const images = payload.urls;
+    const images = ['https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-04-46-5fY29EPCkWhdDTyj1FULKDFX96asjW.jpg',
+        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-01-wWd8yTgUsZrEctM5CNFUMSx75UWQBu.jpg',
+        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-04-B9oJ8FPgxYFsfCWWYlI6xVBK7WKNzz.jpg',
+        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-06-B73Q0g4XdV2i8LpwDDHaV2pVBaiaJf.jpg']
 
     const type = payload.type;
     const pack = payload.pack;
@@ -136,7 +136,7 @@ export async function POST(request: Request) {
         .select("id")
         .single();
 
-    if ((modelError && typeof modelError !== "object")) {
+    if ((modelError && typeof modelError !== "object") || !data?.id) {
         console.error("modelError: ", modelError);
         return NextResponse.json(
             {
@@ -192,15 +192,18 @@ export async function POST(request: Request) {
             tune: {
                 title: name,
                 name: type,
+                branch: astriaTestModeIsOn ? "fast" : "sd15",
                 callback: trainWebhookWithParams,
-                prompt_attributes: null,
+                prompt_attributes: {
+                    callback: promptWebhookWithParams,
+                },
                 image_urls: images,
             },
         };
 
     const response = await axios.post(
       DOMAIN + (packsIsEnabled ? `/p/${pack}/tunes` : "/tunes"),
-      tuneBody,
+        packsIsEnabled ? packBody : tuneBody,
       {
         headers: {
           "Content-Type": "application/json",
