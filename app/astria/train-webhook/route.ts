@@ -29,18 +29,18 @@ if (!appWebhookSecret) {
   throw new Error("MISSING APP_WEBHOOK_SECRET!");
 }
 
+type TuneData = {
+  id: number;
+  title: string;
+  name: string;
+  steps: null;
+  trained_at: null;
+  started_training_at: null;
+  created_at: string;
+  updated_at: string;
+  expires_at: null;
+};
 export async function POST(request: Request) {
-  type TuneData = {
-    id: number;
-    title: string;
-    name: string;
-    steps: null;
-    trained_at: null;
-    started_training_at: null;
-    created_at: string;
-    updated_at: string;
-    expires_at: null;
-  };
 
   const incomingData = (await request.json()) as { tune: TuneData };
 
