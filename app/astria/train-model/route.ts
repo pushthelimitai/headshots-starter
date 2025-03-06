@@ -20,12 +20,7 @@ if (!appWebhookSecret) {
 
 export async function POST(request: Request) {
     const payload = await request.json();
-    // const images = payload.urls;
-    const images = ['https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-04-46-5fY29EPCkWhdDTyj1FULKDFX96asjW.jpg',
-        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-01-wWd8yTgUsZrEctM5CNFUMSx75UWQBu.jpg',
-        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-04-B9oJ8FPgxYFsfCWWYlI6xVBK7WKNzz.jpg',
-        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-06-B73Q0g4XdV2i8LpwDDHaV2pVBaiaJf.jpg']
-
+    const images = payload.urls;
     const type = payload.type;
     const pack = payload.pack;
     const name = payload.name;
