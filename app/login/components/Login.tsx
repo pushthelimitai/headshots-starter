@@ -25,6 +25,8 @@ export const Login = ({
   const supabase = createClientComponentClient<Database>();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isMagicLinkSent, setIsMagicLinkSent] = useState(false);
+  const [email, setEmail] = useState<string>(''); // Добавлено состояние для email
+
   const { toast } = useToast();
 
   const {
