@@ -89,12 +89,25 @@ export const Login = ({
 
     if (error) {
       console.log(`Error: ${error.message}`);
+    } else {
+      setIsMagicLinkSent(true);
+    }
+  };
+
+  const resendMagicLink = async () => {
+    if (email) {
+      await signInWithMagicLink(email);
+    } else {
+      console.log("Email is required to resend the magic link.");
     }
   };
 
   if (isMagicLinkSent) {
     return (
-      <WaitingForMagicLink toggleState={() => setIsMagicLinkSent(false)} />
+      <div>
+        <WaitingForMagicLink toggleState={() => setIsMagicLinkSent(false)} />
+        <button onClick={resendMagicLink}>Resend Magic Link</button>
+      </div>
     );
   }
 

@@ -24,6 +24,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         // ⚠️ Authenticate and authorize users before generating the token.
         // Otherwise, you're allowing anonymous uploads.
         if (!user) {
+          console.error("Пользователь не авторизован"); // Добавлено для отладки
           throw new Error("Unauthorized");
         }
         return {
