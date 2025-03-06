@@ -12,7 +12,7 @@ const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 // For local development, recommend using an Ngrok tunnel for the domain
 
 const appWebhookSecret = process.env.APP_WEBHOOK_SECRET;
-const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
+//const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
 
 if (!appWebhookSecret) {
     throw new Error("MISSING APP_WEBHOOK_SECRET!");
@@ -68,7 +68,8 @@ export async function POST(request: Request) {
         );
     }
     let _credits = null;
-
+    const stripeIsConfigured = "true"
+    
     console.log({stripeIsConfigured});
     if (stripeIsConfigured) {
         const {error: creditError, data: credits} = await supabase
