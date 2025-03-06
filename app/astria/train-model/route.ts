@@ -122,28 +122,46 @@ export async function POST(request: Request) {
     }
 
     // create a model row in supabase
-    const {error: modelError, data, ...params} = await supabase
-        .from("models")
-        .insert({
-            user_id: user.id,
-            name,
-            type,
-        })
-        .select("id")
-        .single();
+   // ... existing code ...
 
-    if ((modelError && typeof modelError !== "object") || !data?.id) {
-        console.error("modelError: ", modelError);
-        return NextResponse.json(
-            {
-                message: "Something went wrong! modelError",
-            },
-            {status: 500}
-        );
+// create a model row in supabase
+const { error: modelError, data } = await supabase
+    .from("models")
+    .insert({
+        user_id: user.id,
+        name,
+        type,
+    })
+    .select("id")
+    .single();
+
+    if (modelError) {
+    console.error("Error creating model: ", modelError);
+    return NextResponse.json(
+        {
+            message: "Something went wrong while creating the model!",
+            error: modelError.message, // Добавляем сообщение об ошибке
+        },
+        { status: 500 }
+    );
     }
 
-    // Get the modelId from the created model
-    const modelId = data?.id;
+    if (!data?.id) {
+    console.error("Model creation returned no ID");
+    return NextResponse.json(
+        {
+            message: "Model created but no ID returned!",
+        },
+        { status: 500 }
+    );
+    }
+
+// Get the modelId from the created model
+const modelId = data.id;
+
+console.log('modelId', modelId)
+
+// ... existing code ...
 
     try {
 
