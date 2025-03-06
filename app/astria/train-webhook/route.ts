@@ -166,6 +166,7 @@ export async function POST(request: Request) {
     );
   } catch (e) {
     console.error(e);
+    console.error("Ошибка в блоке try:", e); // Добавлено логирование ошибки
     return NextResponse.json(
       {
         message: "Something went wrong!",
