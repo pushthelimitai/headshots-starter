@@ -22,6 +22,8 @@ export default async function Index({ params }: { params: { id: string } }) {
     return <Login />;
   }
 
+  console.log("Fetching model with ID:", params.id, "for user ID:", user.id);
+
   const { data: model } = await supabase
     .from("models")
     .select("*")
