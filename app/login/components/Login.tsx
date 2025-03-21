@@ -42,8 +42,8 @@ export const Login = ({
       setTimeout(() => {
         setIsSubmitting(false);
         toast({
-          title: "Email sent",
-          description: "Check your inbox for a magic link to sign in.",
+          title: "Письмо отправлено",
+          description: "Проверьте ваш почтовый ящик для получения волшебной ссылки для входа.",
           duration: 5000,
         });
         setIsMagicLinkSent(true);
@@ -51,10 +51,10 @@ export const Login = ({
     } catch (error) {
       setIsSubmitting(false);
       toast({
-        title: "Something went wrong",
+        title: "Что-то пошло не так",
         variant: "destructive",
         description:
-          "Please try again, if the problem persists, contact us at hello@tryleap.ai",
+          "Пожалуйста, попробуйте снова. Если проблема сохраняется, свяжитесь с нами через форму контактов",
         duration: 5000,
       });
     }
@@ -157,7 +157,7 @@ export const Login = ({
                 />
                 {isSubmitted && errors.email && (
                   <span className={"text-xs text-red-400"}>
-                    {errors.email?.message || "Email is required to sign in"}
+                    {errors.email?.message || "Email обязателен для входа"}
                   </span>
                 )}
               </div>
