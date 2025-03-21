@@ -32,6 +32,7 @@ export interface Database {
           {
             foreignKeyName: "credits_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -60,6 +61,7 @@ export interface Database {
           {
             foreignKeyName: "images_modelId_fkey"
             columns: ["modelId"]
+            isOneToOne: false
             referencedRelation: "models"
             referencedColumns: ["id"]
           }
@@ -71,32 +73,36 @@ export interface Database {
           id: number
           modelId: string | null
           name: string | null
-          status: string
+          status: string | null
           type: string | null
-          user_id: string | null
+          updated_at: string | null
+          user_id: string
         }
         Insert: {
           created_at?: string
           id?: number
           modelId?: string | null
           name?: string | null
-          status?: string
+          status?: string | null
           type?: string | null
-          user_id?: string | null
+          updated_at?: string | null
+          user_id: string
         }
         Update: {
           created_at?: string
           id?: number
           modelId?: string | null
           name?: string | null
-          status?: string
+          status?: string | null
           type?: string | null
-          user_id?: string | null
+          updated_at?: string | null
+          user_id?: string
         }
         Relationships: [
           {
             foreignKeyName: "models_user_id_fkey"
             columns: ["user_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           }
@@ -104,19 +110,19 @@ export interface Database {
       }
       samples: {
         Row: {
-          created_at: string
+          created_at: string | null
           id: number
           modelId: number
           uri: string
         }
         Insert: {
-          created_at?: string
+          created_at?: string | null
           id?: number
           modelId: number
           uri: string
         }
         Update: {
-          created_at?: string
+          created_at?: string | null
           id?: number
           modelId?: number
           uri?: string
@@ -125,7 +131,46 @@ export interface Database {
           {
             foreignKeyName: "samples_modelId_fkey"
             columns: ["modelId"]
+            isOneToOne: false
             referencedRelation: "models"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      users: {
+        Row: {
+          id: string
+          telegram_id: number
+          telegram_username: string | null
+          first_name: string | null
+          last_name: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          telegram_id: number
+          telegram_username?: string | null
+          first_name?: string | null
+          last_name?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          telegram_id?: number
+          telegram_username?: string | null
+          first_name?: string | null
+          last_name?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            isOneToOne: true
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]

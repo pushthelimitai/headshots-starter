@@ -1,6 +1,7 @@
 import { Database } from "@/types/supabase";
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
+import { notifyUserAboutReadyAvatars } from "@/telegram-bot/bot";
 
 export const dynamic = "force-dynamic";
 
@@ -155,6 +156,33 @@ export async function POST(request: Request) {
         }
       })
     );
+
+    // Отправляем уведомление в Telegram если есть сгенерированные изображения
+    if (allHeadshots.length > 0) {
+      try {
+        // Проверяем, есть ли у пользователя связанный Telegram ID
+        const { data: userData, error: userError } = await supabase
+          .from("users")
+          .select("telegram_id")
+          .eq("id", user_id)
+          .single();
+
+        if (!userError && userData && userData.telegram_id) {
+          console.log(`Отправка уведомления в Telegram для пользователя ${user_id}, Telegram ID: ${userData.telegram_id}`);
+          
+          // Асинхронно отправляем уведомление, не ждем завершения
+          notifyUserAboutReadyAvatars(user_id, model_id)
+            .then(() => console.log('Уведомление в Telegram успешно отправлено'))
+            .catch(err => console.error('Ошибка при отправке уведомления в Telegram:', err));
+        } else {
+          console.log(`Для пользователя ${user_id} не найден Telegram ID, уведомление не отправлено`);
+        }
+      } catch (telegramError) {
+        // Ошибка в Telegram не должна прерывать основной поток выполнения
+        console.error('Ошибка при попытке отправить уведомление в Telegram:', telegramError);
+      }
+    }
+    
     return NextResponse.json(
       {
         message: "success",
