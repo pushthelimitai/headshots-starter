@@ -106,9 +106,11 @@ export const Login = ({
 
   if (isMagicLinkSent) {
     return (
-      <div className="flex items-center justify-center p-4">
+      <div className="">
+        <div className="flex items-center justify-center p-4">
         <WaitingForMagicLink toggleState={() => setIsMagicLinkSent(false)} />
         <button onClick={resendMagicLink}>Отправить ссылку еще раз.</button>
+        </div>
       </div>
     );
   }
