@@ -37,7 +37,7 @@ export default async function Index() {
               <Button className="w-full lg:w-1/2">Получить портреты</Button>
             </Link>
             <p className="text-sm text-gray-500 italic">
-              Доверено профессионалами по всему миру. Быстро и эффективно.
+              Проверено профессионалами по всему миру. Быстро и эффективно.
             </p>
           </div>
           <div className="mt-4 text-gray-500">
