@@ -13,7 +13,7 @@ export default function ExplainerSection() {
           <div className="text-3xl font-bold text-blue-600 bg-white border-2 border-blue-600 rounded-full w-10 h-10 flex items-center justify-center">
             1
           </div>
-          <h3 className="text-2xl font-semibold">Загруэите ваши фотографии</h3>
+          <h3 className="text-2xl font-semibold">Загрузите ваши фотографии</h3>
         </div>
         <p className="text-sm text-gray-600 text-center">
         Загрузите 4+ качественных селфи: анфас, 1 человек в кадре, без очков или головных уборов.
