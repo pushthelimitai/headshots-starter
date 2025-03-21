@@ -40,22 +40,22 @@ export default async function Navbar() {
     <div className="flex w-full px-4 lg:px-40 py-4 items-center border-b text-center gap-8 justify-between">
       <div className="flex gap-2 h-full">
         <Link href="/">
-          <h2 className="font-bold">Headshots AI</h2>
+          <h2 className="font-bold">Photoshots AI</h2>
         </Link>
       </div>
       {user && (
         <div className="hidden lg:flex flex-row gap-2">
           <Link href="/overview">
-            <Button variant={"ghost"}>Home</Button>
+            <Button variant={"ghost"}>Главная</Button>
           </Link>
           {packsIsEnabled && (
             <Link href="/overview/packs">
-              <Button variant={"ghost"}>Packs</Button>
+              <Button variant={"ghost"}>Паки</Button>
             </Link>
           )}
           {stripeIsConfigured && (
             <Link href="/get-credits">
-              <Button variant={"ghost"}>Get Credits</Button>
+              <Button variant={"ghost"}>Купить Кредиты</Button>
             </Link>
           )}
         </div>
@@ -63,7 +63,7 @@ export default async function Navbar() {
       <div className="flex gap-4 lg:ml-auto">
         {!user && (
           <Link href="/login">
-            <Button variant={"ghost"}>Login / Signup</Button>
+            <Button variant={"ghost"}>Войти / Регистрация</Button>
           </Link>
         )}
         {user && (
@@ -86,7 +86,7 @@ export default async function Navbar() {
                     className="w-full text-left"
                     variant={"ghost"}
                   >
-                    Log out
+                    Выйти
                   </Button>
                 </form>
               </DropdownMenuContent>

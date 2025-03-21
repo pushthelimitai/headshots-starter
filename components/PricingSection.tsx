@@ -4,7 +4,7 @@ import { Button } from "./ui/button";
 export default function PricingSection() {
   return (
     <div className="w-full max-w-6xl mt-16 mb-16 p-8 rounded-lg space-y-8">
-      <h2 className="text-3xl font-bold text-center mb-8">Pricing</h2>
+      <h2 className="text-3xl font-bold text-center mb-8">Стоимость</h2>
       <div className="flex flex-wrap justify-center lg:space-x-4 space-y-4 lg:space-y-0 items-stretch">
         {pricingOptions.map((option, index) => (
           <div
@@ -45,35 +45,35 @@ export default function PricingSection() {
 
 const pricingOptions = [
   {
-    title: "Starter",
-    price: "1 Credit",
+    title: "Начальный",
+    price: "1 Кредит",
     description:
-      "Perfect for individuals looking to enhance their online presence.",
+      "Идеально для тех, кто хочет улучшить свое онлайн-присутствие.",
     features: [
-      "4 AI Headshots",
+      "4 AI-портрета",
     ],
-    buttonText: "Choose Starter",
+    buttonText: "Выбрать Начальный",
     bgColor: "bg-white",
   },
   {
-    title: "Basic",
-    price: "3 Credits",
+    title: "Базовый",
+    price: "3 Кредита",
     description:
-      "Ideal for professionals requiring frequent updates to their profiles.",
+      "Подходит для профессионалов, которым нужны частые обновления профилей.",
     features: [
-      "12 AI Headshots",
+      "12 AI-портретов",
     ],
-    buttonText: "Choose Basic",
+    buttonText: "Выбрать Базовый",
     bgColor: "bg-blue-50",
   },
   {
-    title: "Premium",
-    price: "5 Credits",
-    description: "The best value with unlimited possibilities.",
+    title: "Премиум",
+    price: "5 Кредитов",
+    description: "Лучшее предложение с безграничными возможностями.",
     features: [
-      "20 AI Headshots",
+      "20 AI-портретов",
     ],
-    buttonText: "Choose Premium",
+    buttonText: "Выбрать Премиум",
     bgColor: "bg-white",
   },
 ];

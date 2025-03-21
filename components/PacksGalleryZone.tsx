@@ -51,7 +51,7 @@ export default function PacksGalleryZone() {
       <div className="flex flex-col items-center justify-center h-64">
         <Loader2 className="w-8 h-8 animate-spin mb-4" />
         <Progress className="w-64" />
-        <p className="mt-4 text-sm text-gray-500">Loading packs...</p>
+        <p className="mt-4 text-sm text-gray-500">Загружаем Стили...</p>
       </div>
     );
   }
@@ -59,7 +59,7 @@ export default function PacksGalleryZone() {
   if (packs.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-lg text-gray-500">No packs available.</p>
+        <p className="text-lg text-gray-500">Нет доступных стилей.</p>
       </div>
     );
   }

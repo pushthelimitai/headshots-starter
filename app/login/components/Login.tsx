@@ -106,9 +106,9 @@ export const Login = ({
 
   if (isMagicLinkSent) {
     return (
-      <div>
+      <div className="flex items-center justify-center p-4">
         <WaitingForMagicLink toggleState={() => setIsMagicLinkSent(false)} />
-        <button onClick={resendMagicLink}>Resend Magic Link</button>
+        <button onClick={resendMagicLink}>Отправить ссылку еще раз.</button>
       </div>
     );
   }
@@ -117,9 +117,9 @@ export const Login = ({
     <>
       <div className="flex items-center justify-center p-8">
         <div className="flex flex-col gap-4 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 p-4 rounded-xl max-w-sm w-full">
-          <h1 className="text-xl">Welcome</h1>
+          <h1 className="text-xl">Привет!</h1>
           <p className="text-xs opacity-60">
-            Sign in or create an account to get started.
+           Войдите или Создайте аккаунт, чтобы начать.
           </p>
           {/* <Button
             onClick={signInWithGoogle}
@@ -170,7 +170,7 @@ export const Login = ({
               className="w-full"
               type="submit"
             >
-              Continue with Email
+              Продолжить с Емейл 
             </Button>
           </form>
         </div>
@@ -183,7 +183,7 @@ export const OR = () => {
   return (
     <div className="flex items-center my-1">
       <div className="border-b flex-grow mr-2 opacity-50" />
-      <span className="text-sm opacity-50">OR</span>
+      <span className="text-sm opacity-50">ИЛИ</span>
       <div className="border-b flex-grow ml-2 opacity-50" />
     </div>
   );
