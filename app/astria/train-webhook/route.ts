@@ -51,8 +51,6 @@ export async function POST(request: Request) {
   const model_id = urlObj.searchParams.get("model_id");
   const webhook_secret = urlObj.searchParams.get("webhook_secret");
 
-  console.log('model_id', model_id)
-
   if (!model_id) {
     return NextResponse.json(
       {
@@ -168,7 +166,6 @@ export async function POST(request: Request) {
     );
   } catch (e) {
     console.error(e);
-    console.error("Ошибка в блоке try:", e); // Добавлено логирование ошибки
     return NextResponse.json(
       {
         message: "Something went wrong!",

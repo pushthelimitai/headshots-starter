@@ -12,7 +12,7 @@ const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 // For local development, recommend using an Ngrok tunnel for the domain
 
 const appWebhookSecret = process.env.APP_WEBHOOK_SECRET;
-//const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
+const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
 
 if (!appWebhookSecret) {
     throw new Error("MISSING APP_WEBHOOK_SECRET!");
@@ -20,7 +20,12 @@ if (!appWebhookSecret) {
 
 export async function POST(request: Request) {
     const payload = await request.json();
-    const images = payload.urls;
+    // const images = payload.urls;
+    const images = ['https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-04-46-5fY29EPCkWhdDTyj1FULKDFX96asjW.jpg',
+        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-01-wWd8yTgUsZrEctM5CNFUMSx75UWQBu.jpg',
+        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-04-B9oJ8FPgxYFsfCWWYlI6xVBK7WKNzz.jpg',
+        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-06-B73Q0g4XdV2i8LpwDDHaV2pVBaiaJf.jpg']
+
     const type = payload.type;
     const pack = payload.pack;
     const name = payload.name;
@@ -63,8 +68,7 @@ export async function POST(request: Request) {
         );
     }
     let _credits = null;
-    const stripeIsConfigured = "true"
-    
+
     console.log({stripeIsConfigured});
     if (stripeIsConfigured) {
         const {error: creditError, data: credits} = await supabase
@@ -95,7 +99,7 @@ export async function POST(request: Request) {
                 console.error({errorCreatingCredits});
                 return NextResponse.json(
                     {
-                        message: "Something went wrong! errorCreatingCredits",
+                        message: "Something went wrong!",
                     },
                     {status: 500}
                 );
@@ -122,46 +126,28 @@ export async function POST(request: Request) {
     }
 
     // create a model row in supabase
-   // ... existing code ...
+    const {error: modelError, data, ...params} = await supabase
+        .from("models")
+        .insert({
+            user_id: user.id,
+            name,
+            type,
+        })
+        .select("id")
+        .single();
 
-// create a model row in supabase
-const { error: modelError, data } = await supabase
-    .from("models")
-    .insert({
-        user_id: user.id,
-        name,
-        type,
-    })
-    .select("id")
-    .single();
-
-    if (modelError) {
-    console.error("Error creating model: ", modelError);
-    return NextResponse.json(
-        {
-            message: "Something went wrong while creating the model!",
-            error: modelError.message, // Добавляем сообщение об ошибке
-        },
-        { status: 500 }
-    );
+    if ((modelError && typeof modelError !== "object") || !data?.id) {
+        console.error("modelError: ", modelError);
+        return NextResponse.json(
+            {
+                message: "Something went wrong!",
+            },
+            {status: 500}
+        );
     }
 
-    if (!data?.id) {
-    console.error("Model creation returned no ID");
-    return NextResponse.json(
-        {
-            message: "Model created but no ID returned!",
-        },
-        { status: 500 }
-    );
-    }
-
-// Get the modelId from the created model
-const modelId = data.id;
-
-console.log('modelId', modelId)
-
-// ... existing code ...
+    // Get the modelId from the created model
+    const modelId = data?.id;
 
     try {
 
@@ -266,7 +252,7 @@ console.log('modelId', modelId)
             console.error("samplesError: ", samplesError);
             return NextResponse.json(
                 {
-                    message: "Something went wrong! samplesError ",
+                    message: "Something went wrong!",
                 },
                 {status: 500}
             );
@@ -287,7 +273,7 @@ console.log('modelId', modelId)
                 console.error({updateCreditError});
                 return NextResponse.json(
                     {
-                        message: "Something went wrong! updateCreditError",
+                        message: "Something went wrong!",
                     },
                     {status: 500}
                 );
@@ -303,7 +289,7 @@ console.log('modelId', modelId)
         }
         return NextResponse.json(
             {
-                message: "Something went wrong! modelId",
+                message: "Something went wrong!",
             },
             {status: 500}
         );
