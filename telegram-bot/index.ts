@@ -23,7 +23,10 @@ try {
   bot.catch((err) => {
     console.error('Произошла ошибка в работе бота:', err);
   });
-  
+ 
+  bot.catch((err: any) => { // Укажите тип, например, any или более конкретный
+    console.error('Ошибка:', err);
+  });
   // Запускаем бота
   bot.start();
   

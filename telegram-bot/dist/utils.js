@@ -1,24 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bot = void 0;
 exports.generateToken = generateToken;
 exports.saveConnectToken = saveConnectToken;
 exports.getTelegramIdByToken = getTelegramIdByToken;
 const supabase_js_1 = require("@supabase/supabase-js");
-const grammy_1 = require("grammy"); // или другой импорт, в зависимости от вашей реализации
 // Настройка клиента Supabase
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || supabaseAnonKey;
 const supabase = (0, supabase_js_1.createClient)(supabaseUrl, supabaseServiceKey);
-const dotenv_1 = require("dotenv");
-(0, dotenv_1.config)(); // Загружаем переменные окружения из .env файла
-const token = process.env.TELEGRAM_BOT_TOKEN;
-if (!token) {
-    throw new Error('TELEGRAM_BOT_TOKEN не установлен'); // Проверка наличия токена
-}
-const bot = new grammy_1.Bot(token); // Создание бота
-exports.bot = bot;
 /**
  * Генерирует случайный токен для связывания аккаунтов
  * @param length Длина токена

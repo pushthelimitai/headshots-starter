@@ -23,6 +23,9 @@ try {
     bot_1.bot.catch((err) => {
         console.error('Произошла ошибка в работе бота:', err);
     });
+    bot_1.bot.catch((err) => {
+        console.error('Ошибка:', err);
+    });
     // Запускаем бота
     bot_1.bot.start();
     console.log('Telegram бот успешно запущен!');

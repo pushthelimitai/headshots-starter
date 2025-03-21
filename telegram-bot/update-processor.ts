@@ -1,7 +1,8 @@
 // telegram-bot/update-processor.ts
-import { Bot, Context } from 'grammy';
+import { Bot } from 'grammy';
 import { processMessage, processCallback } from './handlers';
 
+// Убедитесь, что бот инициализирован правильно
 const bot = new Bot(process.env.TELEGRAM_BOT_TOKEN || '');
 
 export async function processUpdate(update: any) {
