@@ -69,19 +69,10 @@ export const Login = ({
   const redirectUrl = `${protocol}://${host}/auth/callback`;
 
   console.log({ redirectUrl });
-
-  const signInWithGoogle = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: redirectUrl,
-      },
-    });
-
-    console.log(data, error);
-  };
+ 
 
   const signInWithMagicLink = async (email: string) => {
+    console.log("Attempting to sign in with email:", email);
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
