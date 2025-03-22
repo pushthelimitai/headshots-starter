@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { Suspense, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { useRouter, useSearchParams } from 'next/navigation'; 
 
-export default function ConnectTelegramPage() {
+function ConnectTelegramContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
@@ -118,5 +118,13 @@ export default function ConnectTelegramPage() {
         </CardFooter>
       </Card>
     </div>
+  );
+}
+
+export default function ConnectTelegramPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ConnectTelegramContent />
+    </Suspense>
   );
 }

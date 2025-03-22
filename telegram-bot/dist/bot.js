@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bot = void 0;
 exports.generateToken = generateToken;
+exports.notifyUserAboutReadyAvatars = notifyUserAboutReadyAvatars;
 exports.saveConnectToken = saveConnectToken;
 exports.getTelegramIdByToken = getTelegramIdByToken;
 const supabase_js_1 = require("@supabase/supabase-js");
@@ -42,6 +43,30 @@ function generateToken(length = 32) {
         }
     }
     return token;
+}
+// Пример функции notifyUserAboutReadyAvatars
+async function notifyUserAboutReadyAvatars(userId, modelId) {
+    try {
+        // Получаем Telegram ID пользователя из базы данных
+        const { data, error } = await supabase
+            .from('users')
+            .select('telegram_id')
+            .eq('id', userId) // Предполагаем, что userId - это ID пользователя в вашей базе данных
+            .single();
+        if (error || !data) {
+            console.error('Ошибка при получении Telegram ID:', error);
+            return;
+        }
+        const telegramId = data.telegram_id;
+        // Формируем сообщение
+        const message = `Ваши аватары готовы! Вы можете их просмотреть по следующей ссылке: https://example.com/models/${modelId}`;
+        // Отправляем сообщение пользователю
+        await bot.api.sendMessage(telegramId, message);
+        console.log(`Уведомление отправлено пользователю ${telegramId}: ${message}`);
+    }
+    catch (error) {
+        console.error('Ошибка при отправке уведомления:', error);
+    }
 }
 /**
  * Сохраняет токен связывания в базе данных
@@ -100,3 +125,4 @@ async function getTelegramIdByToken(token) {
         return global._tokenStorage?.[token] || null;
     }
 }
+console.log('Экспортируемые члены:', { notifyUserAboutReadyAvatars });

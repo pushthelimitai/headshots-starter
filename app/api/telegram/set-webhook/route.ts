@@ -1,6 +1,7 @@
 //route.ts// app/api/telegram/set-webhook/route.ts
 import { Bot } from 'grammy';
 import { NextResponse } from 'next/server';
+import { Suspense } from 'react';
 
 export async function POST(request: Request) {
   // Логика для обработки POST-запроса
@@ -42,3 +43,5 @@ export async function GET(request: Request) {
    // Возвращаем ответ
     return NextResponse.json({ message: "Webhook GET request received" });
 }
+
+ 
