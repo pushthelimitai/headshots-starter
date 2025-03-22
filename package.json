@@ -41,6 +41,7 @@
     "axios": "^1.6.8",
     "bufferutil": "^4.0.8",
     "busboy": "^1.6.0",
+    "caniuse-lite": "^1.0.30001706",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "cmdk": "^0.2.0",

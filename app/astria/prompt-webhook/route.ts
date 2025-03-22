@@ -1,8 +1,7 @@
 import { Database } from "@/types/supabase";
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
-import { notifyUserAboutReadyAvatars } from "@/telegram-bot/bot";
-
+import { notifyUserAboutReadyAvatars } from "@/telegram-bot/bot"; // Убедитесь, что путь правильный
 export const dynamic = "force-dynamic";
 
 const resendApiKey = process.env.RESEND_API_KEY;

@@ -4,20 +4,19 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function ConnectTelegramPage() {
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [message, setMessage] = useState<string>('');
-  
+
   // Получаем параметры из URL
   const telegramId = searchParams.get('telegram_id');
   const username = searchParams.get('username');
   const firstName = searchParams.get('first_name');
   const lastName = searchParams.get('last_name');
-  
+
   // Функция для подключения Telegram
   const connectTelegram = async () => {
     if (!telegramId) {
@@ -25,11 +24,11 @@ export default function ConnectTelegramPage() {
       setMessage('Не удалось получить Telegram ID. Пожалуйста, попробуйте еще раз.');
       return;
     }
-    
+
     try {
       setStatus('loading');
       setMessage('Связываем ваш аккаунт с Telegram...');
-      
+
       // Отправляем запрос к API
       const response = await fetch('/api/telegram/register', {
         method: 'POST',
@@ -43,14 +42,13 @@ export default function ConnectTelegramPage() {
           last_name: lastName,
         }),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Не удалось связать аккаунт');
       }
-      
+
       const data = await response.json();
-      
       setStatus('success');
       setMessage('Ваш аккаунт успешно связан с Telegram! Теперь вы будете получать уведомления о готовности ваших аватаров.');
     } catch (error) {
@@ -59,7 +57,7 @@ export default function ConnectTelegramPage() {
       setMessage(error instanceof Error ? error.message : 'Произошла неизвестная ошибка');
     }
   };
-  
+
   return (
     <div className="flex min-h-screen flex-col items-center justify-center py-2">
       <Card className="w-full max-w-md">
@@ -121,4 +119,4 @@ export default function ConnectTelegramPage() {
       </Card>
     </div>
   );
-} 
+}
