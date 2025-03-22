@@ -2,6 +2,7 @@
 import { Bot } from 'grammy';
 import { NextResponse } from 'next/server';
 import { Suspense } from 'react';
+import { cookies } from 'next/headers';
 
 export async function POST(request: Request) {
   // Логика для обработки POST-запроса

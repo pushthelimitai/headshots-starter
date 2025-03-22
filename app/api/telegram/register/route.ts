@@ -22,6 +22,7 @@ export async function POST(request: Request) {
     }
 
     const cookieStore = cookies();
+    
     const supabase = createRouteHandlerClient<Database>({ cookies });
 
     // Получаем данные пользователя Supabase

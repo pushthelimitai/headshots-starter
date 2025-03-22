@@ -12,7 +12,7 @@ const packsIsEnabled = process.env.NEXT_PUBLIC_TUNE_TYPE === "packs";
 // For local development, recommend using an Ngrok tunnel for the domain
 
 const appWebhookSecret = process.env.APP_WEBHOOK_SECRET;
-const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "true";
+const stripeIsConfigured = process.env.NEXT_PUBLIC_STRIPE_IS_ENABLED === "false";
 
 if (!appWebhookSecret) {
     throw new Error("MISSING APP_WEBHOOK_SECRET!");
@@ -20,11 +20,11 @@ if (!appWebhookSecret) {
 
 export async function POST(request: Request) {
     const payload = await request.json();
-    // const images = payload.urls;
-    const images = ['https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-04-46-5fY29EPCkWhdDTyj1FULKDFX96asjW.jpg',
-        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-01-wWd8yTgUsZrEctM5CNFUMSx75UWQBu.jpg',
-        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-04-B9oJ8FPgxYFsfCWWYlI6xVBK7WKNzz.jpg',
-        'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-06-B73Q0g4XdV2i8LpwDDHaV2pVBaiaJf.jpg']
+   const images = payload.urls;
+   // const images = ['https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-04-46-5fY29EPCkWhdDTyj1FULKDFX96asjW.jpg',
+       // 'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-01-wWd8yTgUsZrEctM5CNFUMSx75UWQBu.jpg',
+      ///  'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-04-B9oJ8FPgxYFsfCWWYlI6xVBK7WKNzz.jpg',
+      //  'https://fwcjrt6rpdchy9vv.public.blob.vercel-storage.com/photo_2025-01-03_00-20-06-B73Q0g4XdV2i8LpwDDHaV2pVBaiaJf.jpg']
 
     const type = payload.type;
     const pack = payload.pack;
@@ -67,9 +67,37 @@ export async function POST(request: Request) {
             {status: 500}
         );
     }
+
+
+
+     // Заглушка для проверки платежей в режиме разработки
+     const isDevMode = process.env.NODE_ENV === 'development';
+     
+     if (isDevMode) {
+         console.log("Development mode: skipping payment check.");
+     } else {
+         // Логика проверки кредитов
+         const { error: creditError, data: credits } = await supabase
+             .from("credits")
+             .select("credits")
+             .eq("user_id", user.id);
+ 
+         if (creditError || credits.length === 0 || credits[0]?.credits < 1) {
+             return NextResponse.json(
+                 {
+                     message: "Not enough credits, please purchase some credits and try again.",
+                 },
+                 { status: 500 }
+             );
+         }
+     }
+
+
     let _credits = null;
 
     console.log({stripeIsConfigured});
+
+    
     if (stripeIsConfigured) {
         const {error: creditError, data: credits} = await supabase
             .from("credits")
